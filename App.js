@@ -1,11 +1,28 @@
 import { StatusBar } from 'expo-status-bar';
+import { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import MapView, { Marker } from "react-native-maps";
 
 export default function App() {
+
+  const [region, setRegion] = useState(map_config.init)
+
+  const onRegionChange = (region) => {
+    setRegion(region)
+    console.log(region)
+  }
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <MapView
+        initialRegion={map_config.init}
+        style={styles.map}
+        onRegionChange={onRegionChange}>
+        <Marker key={1} coordinate={{
+          latitude: 41.008240,
+          longitude: 28.978359
+        }} title='Test' description='Test' />
+      </MapView>
     </View>
   );
 }
@@ -17,4 +34,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  map: {
+    width: '100%',
+    height: '100%'
+  }
 });
+
+const map_config = {
+  init: {
+    latitude: 41.008240,
+    longitude: 28.978359,
+    latitudeDelta: .1,
+    longitudeDelta: .1
+  }
+} 
